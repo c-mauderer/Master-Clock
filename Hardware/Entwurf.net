@@ -1,0 +1,26 @@
+* H:\aa\Projekte\Mutteruhr\Hardware\Entwurf.asc
+XU1 N003 MP_01 N001 MP_02 0 in N006 in LT8330
+C1 in 0 4.7µ V=100 Irms=0 Rser=0.0043 Lser=1.3n mfg="Würth Elektronik" pn="885012214003 WCAP-CSGP 2220" type="X7R"
+V1 N004 0 4.5
+R2 in N004 1
+C2 N006 0 1µ V=16 Irms=0 Rser=0.0237 Lser=872p mfg="Würth Elektronik" pn="885382207001 WCAP-CSST 0805" type="X7R"
+L1 N001 in 1000n Ipk=1.8 Rser=0.064 Rpar=4276.7 Cpar=424f mfg="Würth Elektronik" pn="744045001 WE-LQ 1812"
+D1 N001 reg PMEG6010AED
+R3 reg N003 1000k
+R4 N003 0 71k
+C3 reg 0 10µ V=50 Irms=0 Rser=0.0051 Lser=500p mfg="Würth Elektronik" pn="885012210031 WCAP-CSGP 1812" type="X7R"
+L2 0 N005 0.1
+R5 N005 uhr 2k
+V2 switch 0 PULSE(0 3 0 1u 1u 100m 200m)
+XU2 switch N002 reg 0 opout OP292
+C4 uhr opout 100µ
+V3 N002 0 1
+.model D D
+.lib C:\users\christian\AppData\Local\LTspice\lib\cmp\standard.dio
+.tran 1s
+.options abstol=1e-3 reltol=0.02
+.ic V(out)=18 V(in)=4.5
+.lib ADI1.lib
+.lib LT8330.sub
+.backanno
+.end
