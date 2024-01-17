@@ -1,0 +1,12 @@
+# Used software versions
+
+## gcc
+
+avr-gcc (GCC) 13.2.0
+
+## avr-libc
+
+Currently (2024-01-17) this needs a git version of the avr-libc. Used version
+(via avr-libc-git Arch AUR package):
+
+https://github.com/avrdudes/avr-libc/tree/55e8cac69935657bcd3e4d938750960c757844c3
