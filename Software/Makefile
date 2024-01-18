@@ -12,10 +12,7 @@ DATE = $(shell date "+%Y-%m-%d %H:%M:%S")
 CFLAGS = -DREVISION="\"$(REV)\"" -DBUILDDATE="\"$(DATE)\"" -mmcu=$(MCU) -Wall -Wextra -std=c11 -O2 -g
 LDFLAGS =
 
-AVRDUDE_FLAGS = -p $(MCU)
-DW_FLAGS = -c dragon_dw
-HV_FLAGS = -c dragon_hvsp
-AVARICE_FLAGS = --dragon --jtag usb --debugwire
+AVRDUDE_FLAGS = -p $(MCU) -c snap_updi
 
 CC = avr-gcc
 GDB = avr-gdb
@@ -48,10 +45,6 @@ clean:
 ctags:
 	ctags --recurse $(SRCDIR) /usr/avr/include
 
-.PHONY: reset
-reset:
-	avarice $(AVARICE_FLAGS)
-
 flash: $(TARGET).hex
 	@echo "*****************************"
 	@echo "don't forget to set the fuses"
@@ -59,14 +52,10 @@ flash: $(TARGET).hex
 	@echo " Fuses in the elf:"
 	@ $(OBJDUMP) -s --section=.fuse $(TARGET).elf
 	@echo "*****************************"
-	$(AVRDUDE) $(AVRDUDE_FLAGS) $(DW_FLAGS) -U flash:w:$(TARGET).hex
+	$(AVRDUDE) $(AVRDUDE_FLAGS) -U flash:w:$<
 
-fuses: $(TARGET).elf
-	@echo "HV PROGRAMMING NECESSARY. SEE AVR Dragon Manual Chapter 6.4"
-	$(eval FUSES := $(shell $(OBJDUMP) -s --section=.fuse $(TARGET).elf | grep 820000 | cut -d' ' -f3))
-	$(eval LFUSE := $(shell echo -n $(FUSES) | head -c2))
-	$(eval HFUSE := $(shell echo -n $(FUSES) | tail -c2))
-	avrdude $(AVRDUDE_FLAGS) $(HV_FLAGS) -U lfuse:w:0x$(LFUSE):m -U hfuse:w:0x$(HFUSE):m
+fuses: $(TARGET).fuses.hex
+	avrdude $(AVRDUDE_FLAGS) -U fuses:w:$<
 
 eeprom: $(TARGET).eep
 	$(AVRDUDE) $(AVRDUDE_FLAGS) -U eeprom:w:$(TARGET).eep
@@ -80,9 +69,8 @@ debug: $(TARGET).elf
 %.hex : %.elf
 	$(OBJCOPY) -O ihex -R .eeprom -R .fuse $< $@
 
-%.eep : %.elf
-	-$(OBJCOPY) -j .eeprom --set-section-flags=.eeprom="alloc,load" \
-	--change-section-lma .eeprom=0 -O ihex $< $@
+%.fuses.hex : %.elf
+	-$(OBJCOPY) -j .fuse --change-section-lma .fuse=0 -O ihex $< $@
 
 $(TARGET).elf: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) --output $@ $(LDFLAGS)

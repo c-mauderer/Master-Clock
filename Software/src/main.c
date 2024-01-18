@@ -48,8 +48,8 @@ FUSES =
 #define KEY_STEP_MASK (1 << 6)
 #define KEY_PAUSE_MASK (1 << 7)
 
-#define LED_ON do { PORTA.OUTCLR = LED_MASK; } while(0)
-#define LED_OFF do { PORTA.OUTSET = LED_MASK; } while(0)
+#define LED_ON do { PORTA.OUTSET = LED_MASK; } while(0)
+#define LED_OFF do { PORTA.OUTCLR = LED_MASK; } while(0)
 #define LED_TOGGLE do { PORTA.OUTTGL = LED_MASK; } while(0)
 
 #define KEY_STEP_GET ((PORTA.IN & KEY_STEP_MASK) != 0)
