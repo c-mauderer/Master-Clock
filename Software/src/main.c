@@ -121,7 +121,7 @@ timer_init(void)
 	RTC.PITINTCTRL = RTC_PI_bm;
 	RTC.PITCTRLA = RTC_PERIOD_CYC32768_gc | RTC_PITEN_bm;
 
-	second_ctr = SECONDS_PER_MINUTE;
+	second_ctr = MINIMUM_SECONDS_PER_STEP;
 }
 
 /*
