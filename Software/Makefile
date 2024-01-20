@@ -30,11 +30,10 @@ DEPS = $(patsubst $(SRCDIR)/%.c,$(DEPDIR)/%.d,$(SRC))
 $(shell mkdir -p $(DEPDIR) >/dev/null)
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td
 
-all: elf hex eep
+all: elf hex
 
 elf: $(TARGET).elf
 hex: $(TARGET).hex
-eep: $(TARGET).eep
 
 .PHONY: clean
 clean:
@@ -56,9 +55,6 @@ flash: $(TARGET).hex
 
 fuses: $(TARGET).fuses.hex
 	avrdude $(AVRDUDE_FLAGS) -U fuses:w:$<
-
-eeprom: $(TARGET).eep
-	$(AVRDUDE) $(AVRDUDE_FLAGS) -U eeprom:w:$(TARGET).eep
 
 debugserver:
 	$(AVARICE) $(AVARICE_FLAGS) --part $(MCU) --jtag-bitrate 2000 localhost:1234
