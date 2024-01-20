@@ -28,6 +28,7 @@
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
 #include <util/delay.h>
+#include <stdbool.h>
 
 FUSES =
 {
@@ -47,6 +48,7 @@ FUSES =
 };
 
 #define LED_MASK (1 << 2)
+#define MINUTE_PULSE_MASK (1 << 1)
 #define KEY_STEP_MASK (1 << 6)
 #define KEY_PAUSE_MASK (1 << 7)
 
@@ -54,14 +56,22 @@ FUSES =
 #define LED_OFF do { PORTA.OUTCLR = LED_MASK; } while(0)
 #define LED_TOGGLE do { PORTA.OUTTGL = LED_MASK; } while(0)
 
-#define KEY_STEP_GET ((PORTA.IN & KEY_STEP_MASK) != 0)
-#define KEY_PAUSE_GET ((PORTA.IN & KEY_PAUSE_MASK) != 0)
+#define MINUTE_PULSE_TOGGLE do { PORTA.OUTTGL = MINUTE_PULSE_MASK; } while(0)
+
+#define KEY_STEP_GET ((PORTA.IN & KEY_STEP_MASK) == 0)
+#define KEY_PAUSE_GET ((PORTA.IN & KEY_PAUSE_MASK) == 0)
+
+static bool pause = false;
+static int8_t second_ctr = 0;
+
+#define SECONDS_PER_MINUTE 60
+#define MINIMUM_SECONDS_PER_STEP 5
 
 /*
  * Setup I/Os:
  *
  * - PA0: Reset/UPDI -> Other/Special: UPDI
- * - PA1: Minute Pulse Output -> TCA0:WO1 or GPIO out
+ * - PA1: Minute Pulse Output -> GPIO out
  * - PA2: LED Output -> GPIO out
  * - PA3: 32kHz Input -> Other/Special: EXTCLK
  * - PA6: Key STEP -> GPIO in
@@ -70,9 +80,8 @@ FUSES =
 static void
 io_init(void)
 {
-	PORTA.DIRSET = LED_MASK;
 	LED_OFF;
-
+	PORTA.DIRSET = LED_MASK | MINUTE_PULSE_MASK;
 	PORTA.DIRCLR = KEY_STEP_MASK | KEY_PAUSE_MASK;
 }
 
@@ -106,19 +115,48 @@ standby_init(void)
 static void
 timer_init(void)
 {
-	RTC.CLKSEL = RTC_CLKSEL_EXTCLK_gc;
+	while(RTC.PITSTATUS != 0) {
+	}
+	RTC.CLKSEL = RTC_CLKSEL_INT32K_gc;
 	RTC.PITINTCTRL = RTC_PI_bm;
-	RTC.PITCTRLA = 0xE;
-	RTC.PITCTRLA |= RTC_PITEN_bm;
+	RTC.PITCTRLA = RTC_PERIOD_CYC32768_gc | RTC_PITEN_bm;
+
+	second_ctr = SECONDS_PER_MINUTE;
 }
 
 /*
  * Clear flag. Count time. Optionally: Toggle pins.
  */
-ISR(RTC_PIT_vect)
+ISR(RTC_PIT_vect, ISR_BLOCK)
 {
 	RTC.PITINTFLAGS = RTC_PI_bm;
-	/* FIXME */
+
+	if (KEY_PAUSE_GET) {
+		pause = true;
+	} else if (KEY_STEP_GET) {
+		LED_ON;
+		_delay_ms(5);
+		LED_OFF;
+		pause = false;
+		if (second_ctr > MINIMUM_SECONDS_PER_STEP) {
+			second_ctr = MINIMUM_SECONDS_PER_STEP;
+		}
+	}
+
+	second_ctr -= 1;
+
+	if (pause) {
+		/* Signal pause */
+		LED_ON;
+		_delay_ms(1);
+		LED_OFF;
+	} else if (second_ctr == 0) {
+		second_ctr = SECONDS_PER_MINUTE;
+		MINUTE_PULSE_TOGGLE;
+		LED_ON;
+		_delay_ms(1);
+		LED_OFF;
+	}
 }
 
 int
@@ -135,11 +173,9 @@ main (void)
 	}
 	LED_OFF;
 
+	sei();
 	while (1) {
 		sleep_mode();
-		LED_ON;
-		_delay_ms(20);
-		LED_OFF;
 	}
 
 	return 0;
