@@ -23,7 +23,9 @@
 #define F_CPU 32768ul
 
 #include <avr/io.h>
+
 #include <avr/cpufunc.h>
+#include <avr/interrupt.h>
 #include <avr/sleep.h>
 #include <util/delay.h>
 
@@ -98,10 +100,25 @@ standby_init(void)
 	SLPCTRL.CTRLA = SLPCTRL_SMODE_PDOWN_gc;
 }
 
+/*
+ * Use the RTC PIT to wake up once every second.
+ */
 static void
 timer_init(void)
 {
-#warning FIXME: Add timer initialization
+	RTC.CLKSEL = RTC_CLKSEL_EXTCLK_gc;
+	RTC.PITINTCTRL = RTC_PI_bm;
+	RTC.PITCTRLA = 0xE;
+	RTC.PITCTRLA |= RTC_PITEN_bm;
+}
+
+/*
+ * Clear flag. Count time. Optionally: Toggle pins.
+ */
+ISR(RTC_PIT_vect)
+{
+	RTC.PITINTFLAGS = RTC_PI_bm;
+	/* FIXME */
 }
 
 int
@@ -112,14 +129,17 @@ main (void)
 	timer_init();
 	standby_init();
 
-	for(int i = 0; i < 4; ++i) {
+	for(int i = 0; i < 6; ++i) {
 		LED_TOGGLE;
-		_delay_ms(100);
+		_delay_ms(200);
 	}
 	LED_OFF;
 
 	while (1) {
 		sleep_mode();
+		LED_ON;
+		_delay_ms(20);
+		LED_OFF;
 	}
 
 	return 0;
