@@ -9,7 +9,7 @@ SRC += $(SRCDIR)/main.c
 
 REV = $(shell git rev-parse --short HEAD)
 DATE = $(shell date "+%Y-%m-%d %H:%M:%S")
-CFLAGS = -DREVISION="\"$(REV)\"" -DBUILDDATE="\"$(DATE)\"" -mmcu=$(MCU) -Wall -Wextra -std=c11 -O2 -g
+CFLAGS = -DREVISION="\"$(REV)\"" -DBUILDDATE="\"$(DATE)\"" -mmcu=$(MCU) -Wall -Wextra -std=c11 --param=min-pagesize=0 -O2 -g
 LDFLAGS =
 
 AVRDUDE_FLAGS = -p $(MCU) -c snap_updi
