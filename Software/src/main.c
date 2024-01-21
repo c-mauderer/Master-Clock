@@ -137,13 +137,15 @@ ISR(RTC_PIT_vect, ISR_BLOCK)
 		LED_ON;
 		_delay_ms(5);
 		LED_OFF;
-		pause = false;
-		if (second_ctr > MINIMUM_SECONDS_PER_STEP) {
+		if (second_ctr > MINIMUM_SECONDS_PER_STEP || pause) {
 			second_ctr = MINIMUM_SECONDS_PER_STEP;
 		}
+		pause = false;
 	}
 
-	second_ctr -= 1;
+	if (!pause) {
+		second_ctr -= 1;
+	}
 
 	if (pause) {
 		/* Signal pause */
