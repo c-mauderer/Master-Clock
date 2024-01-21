@@ -1,0 +1,7 @@
+# Open Bugs
+
+- Missing marking for + and - on the supply input
+- Missing marking for the negative terminal of the capacitors
+- R7 and C11 are marked incorrectly on the silk screen
+- Value of Output capacitor can be reduced.
+- Pads of the electrolytic capacitors could be slightly larger
