@@ -19,6 +19,18 @@ parser.add_argument(
     type = argparse.FileType('r'),
 )
 parser.add_argument(
+    "--first",
+    help = "index of first column",
+    type = int,
+    default = 0,
+)
+parser.add_argument(
+    "--second",
+    help = "index of second column",
+    type = int,
+    default = 1,
+)
+parser.add_argument(
     "-i", "--integrate",
     help = "Add a integrated plot",
     action = 'store_true',
@@ -43,8 +55,8 @@ for row in data:
     if line % 100 == 0:
         print(f"processing line: {line}")
     try:
-        t = dateparser.parse(row[0])
-        v = ureg(row[1])
+        t = dateparser.parse(row[args.first])
+        v = ureg(row[args.second])
         v.ito_base_units()
 
         if unit is None:
