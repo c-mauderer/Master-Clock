@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import matplotlib.pyplot as plt
+from matplotlib.widgets import Cursor
 import csv
 import dateparser
 import argparse
@@ -38,7 +39,7 @@ parser.add_argument(
 parser.add_argument(
     "-u", "--unit",
     help = "Unit of second column if none is given in the file",
-    default = 'volts',
+    default = 'm',
 )
 
 args = parser.parse_args()
@@ -128,7 +129,7 @@ for row in data:
         print(f"Cannot parse '{row}': {exception}")
 
     # Check for lot's of errors and switch approach if necessary
-    if line == 50:
+    if line == 30:
         retry = False
         if sucessfull_times == 0 and time_parser != time_parser_seconds:
             retry = True
@@ -151,13 +152,34 @@ if len(tim) == 0:
     print("Didn't find any useable lines")
     exit(-1)
 
-plt.plot(tim, val, 'C1')
-plt.xlabel('Zeit')
-plt.ylabel(f'{unit}')
+# Change format of coordinate display.
+# See https://stackoverflow.com/a/21585524
+def make_format(current, other):
+    # current and other are axes
+    def format_coord(x, y):
+        # x, y are data coordinates
+        # convert to display coords
+        display_coord = current.transData.transform((x,y))
+        inv = other.transData.inverted()
+        # convert back to data coords with respect to ax
+        ax_coord = inv.transform(display_coord)
+        coords = [ax_coord, (x, y)]
+        return (f'x: {coords[0][0]:.10}, left y: {coords[0][1]:.4}, right y: {coords[1][1]:.4}')
+    return format_coord
+
+# And show the figure
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+
+ax.plot(tim, val, 'C1')
+ax.set_xlabel('Zeit')
+ax.set_ylabel(f'{unit}')
 
 if args.integrate:
-    secax = plt.twinx()
+    secax = ax.twinx()
     secax.plot(tim, integ, 'C2')
     secax.set_ylabel(f'{intunit}')
+    secax.format_coord = make_format(secax, ax)
 
+cursor = Cursor(ax, color='C3', linewidth=1)
 plt.show()
