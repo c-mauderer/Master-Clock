@@ -38,7 +38,7 @@ parser.add_argument(
 parser.add_argument(
     "-u", "--unit",
     help = "Unit of second column if none is given in the file",
-    default = 'units',
+    default = 'volts',
 )
 
 args = parser.parse_args()
@@ -48,13 +48,18 @@ ureg.setup_matplotlib(True)
 defaultunits = ureg(args.unit)
 
 def time_parser_datetime(val):
-    return dateparser.parse(val)
+    tim = dateparser.parse(val)
+    if tim is None:
+        raise Exception("Can't parse date")
+    return tim
 
 def time_parser_seconds(val):
     return float(val)
 
 def value_parser_unitregistry(val):
     v = ureg(val)
+    if type(v) == float:
+        v *= defaultunits
     v.ito_base_units()
     return v
 
@@ -108,7 +113,10 @@ for row in data:
             intunit = integ_v.u
         else:
             tdiff = t - prev_t
-            tdiff = tdiff.total_seconds() * ureg.second
+            if type(tdiff) == float:
+                tdiff = tdiff * ureg.second
+            else:
+                tdiff = tdiff.total_seconds() * ureg.second
             integ_v += tdiff * v
         prev_t = t
         integ_v.ito_base_units()
@@ -122,11 +130,11 @@ for row in data:
     # Check for lot's of errors and switch approach if necessary
     if line == 50:
         retry = False
-        if sucessfull_times == 0:
+        if sucessfull_times == 0 and time_parser != time_parser_seconds:
             retry = True
             time_parser = time_parser_seconds
             print(f"Can't parse times. Try different approach.")
-        if sucessfull_values == 0:
+        if sucessfull_values == 0 and value_parser != value_parser_float:
             retry = True
             value_parser = value_parser_float
             print(f"Can't parse values. Try different approach.")
@@ -135,6 +143,13 @@ for row in data:
             args.input[0].seek(0)
             print(f"Retry")
 
+print(f'tim: {tim}')
+print(f'val: {val}')
+print(f'integ: {integ}')
+
+if len(tim) == 0:
+    print("Didn't find any useable lines")
+    exit(-1)
 
 plt.plot(tim, val, 'C1')
 plt.xlabel('Zeit')
