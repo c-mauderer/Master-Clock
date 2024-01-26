@@ -35,30 +35,69 @@ parser.add_argument(
     help = "Add a integrated plot",
     action = 'store_true',
 )
+parser.add_argument(
+    "-u", "--unit",
+    help = "Unit of second column if none is given in the file",
+    default = 'units',
+)
 
 args = parser.parse_args()
 
-tim = []
-val = []
-integ = []
-unit = None
-intunit = None
-prev_t = None
-line = 0
-
 ureg = UnitRegistry()
 ureg.setup_matplotlib(True)
+defaultunits = ureg(args.unit)
+
+def time_parser_datetime(val):
+    return dateparser.parse(val)
+
+def time_parser_seconds(val):
+    return float(val)
+
+def value_parser_unitregistry(val):
+    v = ureg(val)
+    v.ito_base_units()
+    return v
+
+def value_parser_float(val):
+    return float(val) * defaultunits
+
+def init_vals():
+    global tim, val, integ, unit, intunit, prev_t, line, sucessfull_times, sucessfull_values
+    tim = []
+    val = []
+    integ = []
+    unit = None
+    intunit = None
+    prev_t = None
+    line = 0
+    sucessfull_times = 0
+    sucessfull_values = 0
+
+init_vals()
+value_parser = value_parser_unitregistry
+time_parser = time_parser_datetime
 
 data = csv.reader(args.input[0])
 for row in data:
     line += 1
     if line % 100 == 0:
         print(f"processing line: {line}")
-    try:
-        t = dateparser.parse(row[args.first])
-        v = ureg(row[args.second])
-        v.ito_base_units()
 
+    # Try to parse values
+    exception = None
+    try:
+        t = time_parser(row[args.first])
+        sucessfull_times += 1
+    except Exception as e:
+        exception = e
+    try:
+        v = value_parser(row[args.second])
+        sucessfull_values += 1
+    except Exception as e:
+        exception = e
+
+    # Post-process values
+    if exception is None:
         if unit is None:
             unit = v.u
         else:
@@ -77,8 +116,25 @@ for row in data:
         tim.append(t)
         val.append(v.m)
         integ.append(integ_v.m)
-    except Exception as e:
-        print(f"Cannot parse '{row}': {e}")
+    else:
+        print(f"Cannot parse '{row}': {exception}")
+
+    # Check for lot's of errors and switch approach if necessary
+    if line == 50:
+        retry = False
+        if sucessfull_times == 0:
+            retry = True
+            time_parser = time_parser_seconds
+            print(f"Can't parse times. Try different approach.")
+        if sucessfull_values == 0:
+            retry = True
+            value_parser = value_parser_float
+            print(f"Can't parse values. Try different approach.")
+        if retry:
+            init_vals()
+            args.input[0].seek(0)
+            print(f"Retry")
+
 
 plt.plot(tim, val, 'C1')
 plt.xlabel('Zeit')
