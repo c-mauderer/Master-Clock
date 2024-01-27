@@ -449,6 +449,31 @@ these values are at the 10 V input. So the idle current is at least (57.8 -
 12.4) * 24 V / 10 V = 109 µA for the one and 164 µA for the other minute. That's
 a lot more than expected.
 
+#### Searching for a Reason
+
+Analog Devices provides a nice App Note
+[AN-849](https://www.analog.com/media/en/technical-documentation/application-notes/AN-849.pdf),
+why Op amps shouldn't be used as comparators like I did in my circuit. One Point
+is that an Op amp might have an input protection circuit with some diodes, that
+protects the input from a differential voltage higher than ± 0.6 V.
+
+The Application note suggests to read the data sheet very carefully and check
+for the following points:
+
+- Low values of absolute maximum differential input voltage. The OP193 has a
+  quite high value for that so that shouldn't be a problem.
+
+- Graphs of bias current or input current vs. differential or common-mode
+  voltage that show discontinuities or gross nonlinearity. The OP193 indeed has
+  a Input Bias Current vs. Common-Mode Voltage that's quite heavily nonlinear.
+
+- Evidence of phase-inversion. One evidence can be a limit of the common mode
+  voltage. The OP193 indeed has a limit for that that is about 0.1 V above and
+  1.5 V below the minimum or maximum supply voltage.
+
+The alternative chip (LT1178) does look a bit better regarding that (especially
+the second point). But it's most likely not ideal either.
+
 #### Things To Do
 
 * There are some minor bugs especially in the marking of the first PCB. These
