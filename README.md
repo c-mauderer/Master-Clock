@@ -419,8 +419,8 @@ In theory, the big capacity of C4 might isn't even necessary. The motor of the
 clock is a coil with a lot of windings and some series resistors. In my case, it
 has about 4 kΩ. Even if I assume other clocks with a quarter of that, the
 maximum current is 24 mA. Both OPVs that I selected can drive less than that
-(LT1178 can sink or source 5 mA according to the datasheet summary; OP193 states
-the same in the functional description). The switching regulator should be well
+(LT1178 can sink or source 5 mA according to the datasheet summary; OP193
+summary tells something about ±8 mA). The switching regulator should be well
 capable of delivering up to 100 mA, so C4 shouldn't be necessary.
 
 Result: C4 will be removed completely. A test with 3 V and 10 V input voltage
