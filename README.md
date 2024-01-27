@@ -317,6 +317,39 @@ it's about 6.72 Ws per hour or 1.87 mW. A bit less then I expected for the 220
 µF based on the earlier measurements. But I changed some other parameters
 (higher voltage, better meter) so it's not unreasonable.
 
+So what is using the energy? I need the controller and it's peripherals for all
+other measurements for generating the minute pulse. So let's check that one
+first.
+
+The CPU is clocked with the 32 kHz oscillator. I power the controller with 1.8 V.
+At these frequency and supply, the data sheet gives a typical consumption of 7
+µA when active or 1.7 µA when idle (rated at 2V). The buttons have static
+pull-ups and the LED is connected so that the idle (off) level of the pin is
+low. So that shouldn't need any energy (except for some leakage current in the
+capacitors parallel to the buttons). The oscillator is rated for 0.65 µA at 3.3V
+or 0.38 µA at 1.2V. Let's assume the higher current. The LDO has a idle current
+of something between 1.5 and 2.5 µA with no load. It is rated for 500 mA max so
+the processor and peripherals should be basically no load. So the total
+consumption should be below 10 µA.
+
+That leaves the LED which is connected directly to the input voltage with a 2.2
+kΩ resistor. At 10 V it should need about (10 V - 2 V) / 2.2 kΩ = 3.6 mA when
+on. The LED is switched on only for very short flashes of 1 ms per minute. The
+current should average to 60 µA which is a lot more than the controller.
+
+So much for theory. Now some measurements: I removed R13. With that, the whole
+switching regulator part is disconnected. I recorded a [few minutes of
+measurements](./Measurements/current_10V_controller_and_peripherals.png) in the
+2 mA range of my meter. As expected, there was a very low current most of the
+time with a few peaks when the LED has been switched on. The LED pulses are a
+bit too short. So the meter didn't capture them well. The graphics is not that
+easy to evaluate in this case. So I switched to the statistics function of the
+meter instead. The average current there is at 3.9 µA which is less than the 10
+µA that I estimated and therefore it's a reasonable value for the controller.
+The maximum value is at 0.91 mA. That's less than the LED needs. It's likely
+that the capacitors on the board smoothed out the LED current a bit so it's
+still a reasonable peak value. But the average should be higher, so it's clear
+that most LED pulses are missed.
 
 #### Things To Do
 
