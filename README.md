@@ -251,6 +251,8 @@ switches the minute output to the other level.
 
 #### Tests and Measurements
 
+##### Estimate Influence of C5
+
 The first tests with the circuit worked really well. It worked more or less out
 of the box. So I did some current consumption measurements. It's not simple to
 measure currents that small. The multimeter that I used (a Owon HDS2102S) is not
@@ -284,7 +286,37 @@ relevant part of that consumption.
 
 With an even smaller capacitor of 47 µF, the clock hands can't move any more.
 A 47 µF parallel to a 22 µF works. So the 100 µF is already the lower limit that
-should be useable.
+should be useable. Assuming that the capacitor will age over time, most likely a
+150 µF to 220 µF is a better choice.
+
+##### Detailed Analysis
+
+Especially with the 100 µF capacitor, the standby current is quite relevant.
+Therefore I decided to take a more detailed look at what is using the energy.
+Time to use a better meter. So I switched to a bench top meter with 5.5 digits
+at 5 readings per second measuring speed or 4.5 digits at 20 or 123 readings per
+second.
+
+I decided to use a 220 µF capacitor for C5, because that's most likely the one
+I'll later use. Beneath that, I switched to a laboratory power supply.
+
+With 5 V supply, the current peaks to over 20 mA which would mean that I have to
+use the 200 mA range. In that range, the resolution of the meter isn't
+satisfactory any more at higher reading rates. Luckily, the high currents are
+used for charging the capacitors. So the switching regulator is involved. By
+just increasing the voltage to 10 V, I can avoid the currents over 20 mA and
+therefore stick to the smaller range.
+
+A few detailed minutes of the recording are shown here:
+
+![Current consumption for 220 µF](./Measurements/current_220uF_10V.png)
+
+At the first minute pulse at about 49s, 0.0029 As or 29 mWs have been used. At
+the third minute pules at about 169s, 0.0253 As or 253 mWs have been used. So
+it's about 6.72 Ws per hour or 1.87 mW. A bit less then I expected for the 220
+µF based on the earlier measurements. But I changed some other parameters
+(higher voltage, better meter) so it's not unreasonable.
+
 
 #### Things To Do
 

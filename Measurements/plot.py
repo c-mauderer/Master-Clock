@@ -83,7 +83,9 @@ init_vals()
 value_parser = value_parser_unitregistry
 time_parser = time_parser_datetime
 
-data = csv.reader(args.input[0])
+dialect = csv.Sniffer().sniff(args.input[0].read(2048))
+args.input[0].seek(0)
+data = csv.reader(args.input[0], dialect)
 for row in data:
     line += 1
     if line % 100 == 0:
