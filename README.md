@@ -249,9 +249,9 @@ The software is really simple. It just initializes all necessary hardware and
 then sleeps. It wakes up the controller every second (using the PIT) and
 switches the minute output to the other level.
 
-#### Tests and Measurements
+### Tests and Measurements
 
-##### Estimate Influence of C5
+#### Estimate Influence of C5
 
 The first tests with the circuit worked really well. It worked more or less out
 of the box. So I did some current consumption measurements. It's not simple to
@@ -289,13 +289,13 @@ A 47 µF parallel to a 22 µF works. So the 100 µF is already the lower limit t
 should be useable. Assuming that the capacitor will age over time, most likely a
 150 µF to 220 µF is a better choice.
 
-##### Detailed Analysis
+#### Detailed Analysis
 
-Especially with the 100 µF capacitor, the standby current is quite relevant.
-Therefore I decided to take a more detailed look at what is using the energy.
-Time to use a better meter. So I switched to a bench top meter with 5.5 digits
-at 5 readings per second measuring speed or 4.5 digits at 20 or 123 readings per
-second.
+Especially with smaller capacitors for C5, the standby current is quite
+relevant. Therefore I decided to take a more detailed look at what is using the
+energy. Time to use a better meter. So I switched to a bench top meter with 5.5
+digits at 5 readings per second measuring speed or 4.5 digits at 20 or 123
+readings per second.
 
 I decided to use a 220 µF capacitor for C5, because that's most likely the one
 I'll later use. Beneath that, I switched to a laboratory power supply.
@@ -307,7 +307,7 @@ used for charging the capacitors. So the switching regulator is involved. By
 just increasing the voltage to 10 V, I can avoid the currents over 20 mA and
 therefore stick to the smaller range.
 
-A few detailed minutes of the recording are shown here:
+A recording with the length of a few minutes is shown here:
 
 ![Current consumption for 220 µF](./Measurements/current_220uF_10V.png)
 
@@ -317,9 +317,13 @@ it's about 6.72 Ws per hour or 1.87 mW. A bit less then I expected for the 220
 µF based on the earlier measurements. But I changed some other parameters
 (higher voltage, better meter) so it's not unreasonable.
 
-So what is using the energy? I need the controller and it's peripherals for all
-other measurements for generating the minute pulse. So let's check that one
-first.
+So what is using the energy? Let's take a look at the separate parts of the
+schematic.
+
+#### Part 1: Controller and Peripherals
+
+I need the controller and it's peripherals for all other measurements for
+generating the minute pulse. So I decided to check that one first.
 
 The CPU is clocked with the 32 kHz oscillator. I power the controller with 1.8 V.
 At these frequency and supply, the data sheet gives a typical consumption of 7
@@ -335,7 +339,8 @@ consumption should be below 10 µA.
 That leaves the LED which is connected directly to the input voltage with a 2.2
 kΩ resistor. At 10 V it should need about (10 V - 2 V) / 2.2 kΩ = 3.6 mA when
 on. The LED is switched on only for very short flashes of 1 ms per minute. The
-current should average to 60 µA which is a lot more than the controller.
+current should average to 60 nA which is a lot less than the rest of the
+controller.
 
 So much for theory. Now some measurements: I removed R13. With that, the whole
 switching regulator part is disconnected. I recorded a [few minutes of
@@ -348,8 +353,101 @@ meter instead. The average current there is at 3.9 µA which is less than the 10
 µA that I estimated and therefore it's a reasonable value for the controller.
 The maximum value is at 0.91 mA. That's less than the LED needs. It's likely
 that the capacitors on the board smoothed out the LED current a bit so it's
-still a reasonable peak value. But the average should be higher, so it's clear
-that most LED pulses are missed.
+still a reasonable peak value.
+
+In summary, the controller system behaves like expected.
+
+#### Part 2: Step Up Regulator Without Load
+
+The next part in the circuit is the step up regulator. It's possible that C4 or
+the OPV U3 waste some energy. So I have to remove these for the next
+measurement.
+
+According to the data sheet, the LT8330 should need up to 10 µA in Sleep Mode
+(not switching) or up to 1100 µA if it is in Active Mode (not switching). The
+LT8330 will charge the output capacitor and then it should go into sleep mode as
+long as the output voltage doesn't drop too far. Without a load, the capacitor
+should keep the voltage for quite some time and therefore I would expect that
+the LT8330 basically sleeps all the time.
+
+The feedback network R2 and R4 will use some energy. The data sheet suggests
+something in the range of 1 MΩ. During the design, I already decided that this
+would use up to much energy and used a network with 10 MΩ and 750 kΩ instead.
+The feedback pin current in in the range of 10 nA so that the network should
+still work with an acceptable accuracy. Still, the network needs quite a bit of
+current: I = 24 V / 10.75 MΩ = 2.2 µA. That's at 24 V. At the 10 V input, that
+will be already about 6 µA.
+
+So in summary, the input current should be around 16 µA at 10 V.
+
+Again: Back to the measurement. R13 has to be assembled again. Unfortunately I
+didn't plan to disconnect C4 or the OPV. So there is no simple resistor to
+unsolder or a friendly trace that I could cut. Instead I have to unsolder C4 and
+disconnect pin 7 of U3. Unfortunately, I soldered U3 too well so that I couldn't
+just lift the pin. So I decided to cut off the trade right at the pin.
+
+With that, the total supply current averaged to 16.3 µA, again with a few 1 mA
+peaks of the LED. From part 1 I know that 3.9 µA are from the controller. So
+the DC/DC converter needs about 12.4 µA. That matches well with the estimated
+value.
+
+#### Part 3: Buffer Capacitor C4
+
+Now to one of the main suspects: The big buffer capacitor C4. During the initial
+design, I neglected to check the leakage current of that capacitor. I just used
+some default Panasonic capacitor with the part number ECA-1HM102B.
+
+In the data sheet, the leakage current is given as I ≤ 0.01 CV or 3 µA after 2
+minutes (whichever is greater). For my capacity, the CV value most likely is the
+interesting one. C is the capacitance, V is the rated voltage. The formula is a
+bit odd because usually Farad times Volt should give Coulomb and not Ampere. So
+this is one of the formulas, where the manufacturer decided to skip the right
+unit of the constant. The 0.01 should be 0.01 Hz. With that, I get the following
+leakage current:
+
+0.01 Hz * C * V = 0.01 Hz * 1000 µF * 50 V = 0.5 mA
+
+At the 10 V rail, that would be even more (about 1.2 mA). That's huge compared
+to all other parts that I had till now.
+
+In a real world measurement, I only get 20 to 21 µA of the complete circuit
+after a few minutes if C4 is connected again. Half of that is the base current
+from Part 2, so the capacitor is a lot better then the data sheet tells. The big
+risk here is, that the leakage current will increase quite heavily over time.
+
+In theory, the big capacity of C4 might isn't even necessary. The motor of the
+clock is a coil with a lot of windings and some series resistors. In my case, it
+has about 4 kΩ. Even if I assume other clocks with a quarter of that, the
+maximum current is 24 mA. Both OPVs that I selected can drive less than that
+(LT1178 can sink or source 5 mA according to the datasheet summary; OP193 states
+the same in the functional description). The switching regulator should be well
+capable of delivering up to 100 mA, so C4 shouldn't be necessary.
+
+Result: C4 will be removed completely. A test with 3 V and 10 V input voltage
+showed no problems with that at all.
+
+#### Part 4: Operational Amplifier
+
+Next part is the Operational Amplifier without a load. Only OP193 is analyzed.
+That one works well so I haven't tested the alternative LT1178 at all.
+
+For the test, only the clock is disconnected. With that the output capacitor C5
+is open on one side and therefore shouldn't be relevant.
+
+For the OP193, the data sheet lists a supply current of up to 30 µA per
+amplifier at ±18 V supply voltage. I have a lower supply voltage of only 24 V
+(which would be equivalent to a ±12 V supply voltage) and a chip variant with a
+single amplifier. So my current should be below that.
+
+Let's test that. From now on, the measurement has to check two situations: A low
+and a high minute pulse. So I'll wait for a pulse, reset the average on the
+meter, wait for about 30 to 50 seconds and check the reading.
+
+For the one minute, that's 57.8 µA. For the other minute, it's 80.9 µA. I have
+to reduce these values by the 12.4 µA of the controller and DC/DC regulator. But
+these values are at the 10 V input. So the idle current is at least (57.8 -
+12.4) * 24 V / 10 V = 109 µA for the one and 164 µA for the other minute. That's
+a lot more than expected.
 
 #### Things To Do
 
