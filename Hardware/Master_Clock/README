@@ -6,3 +6,10 @@
 - Value of Output capacitor can be reduced.
 - Pads of the electrolytic capacitors could be slightly larger
 - C4 can be removed.
+- Add a 2.2 MOhm in the MinPulse line and add a voltage divider with two 2.2
+  MOhm between GND and 1.8 V on that line on the OPV side.
+- Reduce R1 and R3 to 2.2 MOhm
+- Change the divider for the LT8330 feedback voltage (R2 and R4). That one
+  currently needs 2.4 µA. Alternative values are:
+    * 4.7 MΩ and 330 kΩ. That will result in a voltage of 24.4 V.
+    * 2.2 MΩ and 330 kΩ. That will result in a voltage of 12.3 V.

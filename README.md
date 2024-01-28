@@ -446,10 +446,10 @@ meter, wait for about 30 to 50 seconds and check the reading.
 For the one minute, that's 57.8 µA. For the other minute, it's 80.9 µA. I have
 to reduce these values by the 12.4 µA of the controller and DC/DC regulator. But
 these values are at the 10 V input. So the idle current is at least (57.8 -
-12.4) * 24 V / 10 V = 109 µA for the one and 164 µA for the other minute. That's
-a lot more than expected.
+12.4) * 10 V / 24 V = 19 µA for the one and 29 µA for the other minute. That's
+in the expected range.
 
-#### Searching for a Reason
+#### Analyzing the Amplifier Some More
 
 Analog Devices provides a nice App Note
 [AN-849](https://www.analog.com/media/en/technical-documentation/application-notes/AN-849.pdf),
@@ -473,6 +473,38 @@ for the following points:
 
 The alternative chip (LT1178) does look a bit better regarding that (especially
 the second point). But it's most likely not ideal either.
+
+Measurements on the negative input of OP193 shows a 15 mV jump if the positive
+input is switched. That's not much but it's visible.
+
+On the output, there is a rise time of 1.1 ms. But no sign of ringing. The same
+is true for the fall time.
+
+To avoid potential problems with the input, additional resistor are added at the
+positive input:
+
+- The MinPulse trace is cut and a 2.2 MΩ is used to close the trace again
+- A 2.2 MΩ is connected to 1.8V on the OPV side of the MinPulse trace
+- A 2.2 MΩ is connected to GND on the OPV side of the MinPulse trace
+
+With these changes, the jump on the negative input is about 7 mV. It has an
+absolute level of 610mW. The positive input is either 458 mV or 903 mV. The
+current consumption is still (on the 10V side) at 58 µA in the one minute and 81
+µA in the other minute.
+
+#### Big Resistors
+
+During measurements, I noted that the system is quite sensitive to touches. It's
+very likely that the reason for this are the high values for some of the
+resistors. To make the system more stable, I added the following changes:
+
+* Reduce the divider R1 and R3 to two 2.2 MΩ instead of the 10 MΩ. This will
+  increase the current on the 1.8V side (and due to the linear regulator) by
+  only 0.3 µA and therefore isn't a problem.
+* Change the divider for the LT8330 feedback voltage (R2 and R4). That one
+  currently needs 2.4 µA. Alternative values are:
+    * 4.7 MΩ and 330 kΩ. That will result in a voltage of 24.4 V.
+    * 2.2 MΩ and 330 kΩ. That will result in a voltage of 12.3 V.
 
 #### Things To Do
 
