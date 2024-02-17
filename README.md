@@ -241,8 +241,6 @@ Together with the parts, one board is about 27 Euro.
 I haven't ordered a paste mask because I currently don't have a soldering oven.
 So populating the boards is hand work.
 
-<!-- FIXME: Add photo of assembled board -->
-
 ### Software
 
 The software is really simple. It just initializes all necessary hardware and
@@ -309,7 +307,7 @@ therefore stick to the smaller range.
 
 A recording with the length of a few minutes is shown here:
 
-![Current consumption for 220 µF](./Measurements/current_220uF_10V.png)
+![Current consumption for 220 µF](./Measurements/current_220uF_10V.svg)
 
 At the first minute pulse at about 49s, 0.0029 As or 29 mWs have been used. At
 the third minute pules at about 169s, 0.0253 As or 253 mWs have been used. So
@@ -344,7 +342,7 @@ controller.
 
 So much for theory. Now some measurements: I removed R13. With that, the whole
 switching regulator part is disconnected. I recorded a [few minutes of
-measurements](./Measurements/current_10V_controller_and_peripherals.png) in the
+measurements](./Measurements/current_10V_controller_and_peripherals.svg) in the
 2 mA range of my meter. As expected, there was a very low current most of the
 time with a few peaks when the LED has been switched on. The LED pulses are a
 bit too short. So the meter didn't capture them well. The graphics is not that
@@ -506,10 +504,93 @@ resistors. To make the system more stable, I added the following changes:
     * 4.7 MΩ and 330 kΩ. That will result in a voltage of 24.4 V.
     * 2.2 MΩ and 330 kΩ. That will result in a voltage of 12.3 V.
 
+### Final Hardware
+
+Wit the changes from above, I assembled the final hardware:
+
+![Top side of assembled PCBs](./Doc/assembled_top.jpg)
+
+![Bottom side of assembled PCBs](./Doc/assembled_bottom.jpg)
+
+#### Final Tests
+
+Some final tests to give an estimate how long a battery will last. For the
+run time estimates, I assume that an AA battery has 3000 mWh and an C cell has
+10000 mWh. These are roughly the same numbers like above. I only estimated a C
+cell with a slightly lower capacity to be on the save side.
+
+##### Recording current at 10 V
+
+![Current at 10 V](./Measurements/current_final_10V.svg)
+
+Power estimate:
+
+* at 85 s: 0.007 As; at 445 s: 0.078 As
+* → (0.071 As) / (6 min) * (10 V) = 1.97 mW
+* 10 V is not a typical battery voltage. So no further estimate.
+
+##### Recording current at 9 V
+
+![Current at 9 V](./Measurements/current_final_9V.svg)
+
+Power estimate:
+
+* at 25 s: 0.002 As; at 385 s: 0.082 As
+* → (0.080 As) / (6 min) * (9 V) = 2.00 mW
+* 9 V would be 6 batteries.
+  * AA would reach 3000 mWh * 6 / 2.00 mW ≈ 375 d
+  * C would reach 10000 mWh * 6 / 2.00 mW ≈ 1250 d
+
+##### Recording current at 7.5
+
+![Current at 7.5 V](./Measurements/current_final_7.5V.svg)
+
+Power estimate:
+
+* at 50 s: 0.005 As; at 410 s: 0.105 As
+* → (0.100 As) / (6 min) * (7.5 V) = 2.08 mW
+* 7.5 V would be 5 batteries.
+  * AA would reach 3000 mWh * 5 / 2.08 mW ≈ 300 d
+  * C would reach 10000 mWh * 5 / 2.08 mW ≈ 1000 d
+
+##### Recording current at 6 V
+
+![Current at 6 V](./Measurements/current_final_6V.svg)
+
+Power estimate:
+
+* at 76 s: 0.012 As; at 436 s: 0.142 As
+* → (0.130 As) / (6 min) * (6 V) = 2.17 mW
+* 6 V would be 4 batteries.
+  * AA would reach 3000 mWh * 4 / 2.17 mW ≈ 230 d
+  * C would reach 10000 mWh * 4 / 2.17 mW ≈ 770 d
+
+##### Recording current at 4.5 V
+
+![Current at 4.5 V](./Measurements/current_final_4.5V.svg)
+
+Power estimate:
+
+* at 65 s: 0.014 As; at 425 s: 0.206 As
+* → (0.192 As) / (6 min) * (4.5V) = 2.40 mW
+* 4.5 V would be 3 batteries.
+  * AA would reach 3000 mWh * 3 / 2.40 mW ≈ 160 d
+  * C would reach 10000 mWh * 3 / 2.40 mW ≈ 520 d
+
+##### Recording current at 3.0 V
+
+![Current at 3.0 V](./Measurements/current_final_3V.svg)
+
+Power estimate:
+
+* at 55 s: 0.019 As; at 415 s: 0.328 As
+* → (0.309 As) / (6 min) * (3V) = 2.58 mW
+* 3 V would be 2 batteries.
+  * AA would reach 3000 mWh * 2 / 2.58 mW ≈ 100 d
+  * C would reach 10000 mWh * 2 / 2.58 mW ≈ 320 d
+
 #### Things To Do
 
 * There are some minor bugs especially in the marking of the first PCB. These
   are documented in a README in the project folder.
-* The idle current is a lot higher than estimated. Find out why that is the
-  case.
 * Add photos.
