@@ -30,11 +30,11 @@ Operationsverstärker zur Ansteuerung zu verwenden.
 ### Useage (German)
 
 Am Eingang der Platine kann eine Spannung von ca. 3 bis 10 V angelegt werden.
-Höhere Spannungen führen dabei voraussichtlich zu niedrigeren Strömen beim
-Schaltreglerteil. Der Prozessor wird über einen Linearregler versorgt und hat
-daher einen konstante Stromaufnahme (und damit eine steigende Energieaufnahme
-bei steigender Spannung). Der Schaltreglerteil sollte allerdings beim
-Energiebudget überwiegen.
+Höhere Spannungen führen dabei zu niedrigerer Gesamt-Leistungsaufnahme. Der
+Prozessor wird über einen Linearregler versorgt und hat daher einen konstante
+Stromaufnahme (und damit eine steigende Energieaufnahme bei steigender
+Spannung). Der Schaltreglerteil überwiegt jedoch beim Energiebudget deutlich,
+wodurch die höhere Spannung günstiger ist.
 
 Am Ausgang wird der Motor der Uhr angeschlossen. Die Polarität ist dabei nicht
 relevant.
@@ -87,11 +87,11 @@ taken up.
 ### Useage Instructions
 
 A voltage of approx. 3 to 10 V can be applied to the input of the circuit board.
-Higher voltages are likely to lead to lower currents in the switching regulator
-section. The processor is supplied via a linear regulator and therefore has a
-constant current consumption (and thus an increasing energy consumption with
-increasing voltage). However, the switching regulator part should predominate in
-the energy budget.
+Higher voltages lead to lower energy consumptions. The processor is supplied via
+a linear regulator and therefore has a constant current consumption (and thus an
+increasing energy consumption with increasing voltage). However, the switching
+regulator part predominates in the energy budget. Therefore a higher voltage is
+better.
 
 The motor of the clock is connected to the output. The polarity is not relevant.
 
