@@ -5,13 +5,13 @@
       "Application": "Pcbnew",
       "Version": "7.0.10"
     },
-    "CreationDate": "2024-01-02T15:41:27+01:00"
+    "CreationDate": "2024-02-17T17:59:34+01:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
       "Name": "Master_Clock",
       "GUID": "4d617374-6572-45f4-936c-6f636b2e6b69",
-      "Revision": "1.0"
+      "Revision": "1.1"
     },
     "Size": {
       "X": 20.15,
@@ -74,8 +74,28 @@
       "FilePolarity": "Negative"
     },
     {
+      "Path": "Master_Clock-User_Drawings.gbr",
+      "FileFunction": "Other,User",
+      "FilePolarity": "Positive"
+    },
+    {
+      "Path": "Master_Clock-User_Comments.gbr",
+      "FileFunction": "Other,User",
+      "FilePolarity": "Positive"
+    },
+    {
       "Path": "Master_Clock-Edge_Cuts.gbr",
       "FileFunction": "Profile",
+      "FilePolarity": "Positive"
+    },
+    {
+      "Path": "Master_Clock-F_Fab.gbr",
+      "FileFunction": "AssemblyDrawing,Top",
+      "FilePolarity": "Positive"
+    },
+    {
+      "Path": "Master_Clock-B_Fab.gbr",
+      "FileFunction": "AssemblyDrawing,Bot",
       "FilePolarity": "Positive"
     }
   ],

@@ -588,9 +588,3 @@ Power estimate:
 * 3 V would be 2 batteries.
   * AA would reach 3000 mWh * 2 / 2.58 mW ≈ 100 d
   * C would reach 10000 mWh * 2 / 2.58 mW ≈ 320 d
-
-#### Things To Do
-
-* There are some minor bugs especially in the marking of the first PCB. These
-  are documented in a README in the project folder.
-* Add photos.

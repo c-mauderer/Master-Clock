@@ -2,14 +2,14 @@
 <export version="E">
   <design>
     <source>/home/christian/aa/Projekte/Mutteruhr/Hardware/Master_Clock/Master_Clock.kicad_sch</source>
-    <date>Mi 27 Dez 2023 10:58:25 CET</date>
-    <tool>Eeschema 7.0.9</tool>
+    <date>Sa 17 Feb 2024 17:48:32 CET</date>
+    <tool>Eeschema 7.0.10</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title>Master Clock</title>
         <company>Christian Mauderer</company>
-        <rev>0.1</rev>
-        <date>2023-12-23</date>
+        <rev>1.1</rev>
+        <date>2024-02-17</date>
         <source>Master_Clock.kicad_sch</source>
         <comment number="1" value="Roughly based on http://www.suessbrich.info/elek/ErsatzMutteruhr.html"/>
         <comment number="2" value=""/>
@@ -63,13 +63,14 @@
       <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="Master_Clock.kicad_sch"/>
+      <property name="dnp"/>
       <property name="ki_description" value="Polarized capacitor"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamps>6b735852-a92d-4b45-87b4-3ed4f8f5f662</tstamps>
     </comp>
     <comp ref="C5">
-      <value>470u 50V</value>
+      <value>Panasonic FC 180u 63V</value>
       <footprint>Capacitor_THT:C_Radial_D12.5mm_H25.0mm_P5.00mm</footprint>
       <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
       <property name="Sheetname" value=""/>
@@ -202,6 +203,28 @@
       <sheetpath names="/" tstamps="/"/>
       <tstamps>c458636f-3c0a-4970-aebb-85b405ee8766</tstamps>
     </comp>
+    <comp ref="H1">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_ISO7380_Pad</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="Master_Clock.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>fd82202e-6382-43dd-8a6c-c8ee060c10a1</tstamps>
+    </comp>
+    <comp ref="H2">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_ISO7380_Pad</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="Master_Clock.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f6eebff6-818d-4efc-aeb0-6510bc374166</tstamps>
+    </comp>
     <comp ref="J1">
       <value>Phoenix Contact 1935161</value>
       <footprint>TerminalBlock_Phoenix:TerminalBlock_Phoenix_PT-1,5-2-5.0-H_1x02_P5.00mm_Horizontal</footprint>
@@ -259,7 +282,7 @@
       <tstamps>cf392871-9b44-4986-ae51-13fc95f0811e</tstamps>
     </comp>
     <comp ref="R1">
-      <value>10M 1%</value>
+      <value>2M2</value>
       <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Sheetname" value=""/>
@@ -270,7 +293,7 @@
       <tstamps>ba29c373-2c3b-4021-a923-ec23c6653b99</tstamps>
     </comp>
     <comp ref="R2">
-      <value>10M 1%</value>
+      <value>4M7</value>
       <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Sheetname" value=""/>
@@ -281,7 +304,7 @@
       <tstamps>74bc2ff8-0828-4511-829d-ebe9149fc366</tstamps>
     </comp>
     <comp ref="R3">
-      <value>10M 1%</value>
+      <value>2M2</value>
       <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Sheetname" value=""/>
@@ -292,7 +315,7 @@
       <tstamps>dc4e483b-c785-43d8-8081-e36c4f0664dd</tstamps>
     </comp>
     <comp ref="R4">
-      <value>750k 1%</value>
+      <value>330k</value>
       <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Sheetname" value=""/>
@@ -368,6 +391,83 @@
       <sheetpath names="/" tstamps="/"/>
       <tstamps>877be43d-9e4f-47e7-b949-8d2f7337b565</tstamps>
     </comp>
+    <comp ref="R11">
+      <value>0R</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="Master_Clock.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1c25f54e-6a66-40a0-a70f-02d12a327dfd</tstamps>
+    </comp>
+    <comp ref="R12">
+      <value>0R</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="Master_Clock.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e3a4ea9e-a286-49e6-a7d7-f7a90751f770</tstamps>
+    </comp>
+    <comp ref="R13">
+      <value>0R</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="Master_Clock.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c62e8e1c-8399-4041-b7b1-9acc5035c964</tstamps>
+    </comp>
+    <comp ref="R14">
+      <value>0R</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="Master_Clock.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>249cda05-e0e3-4e91-afbf-faa8a07bf20c</tstamps>
+    </comp>
+    <comp ref="R15">
+      <value>2M2</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="Master_Clock.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>cd4e1893-96ff-40ff-bf20-a354f6ccaeee</tstamps>
+    </comp>
+    <comp ref="R16">
+      <value>2M2</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="Master_Clock.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d8a9ea03-6a8b-4795-aef3-ddd4c10874b8</tstamps>
+    </comp>
+    <comp ref="R17">
+      <value>2M2</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="Master_Clock.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>dd77cb7c-66ca-47ea-a2fa-4979f5dfced1</tstamps>
+    </comp>
     <comp ref="SW1">
       <value>SW_Push</value>
       <footprint>Button_Switch_THT:SW_PUSH_6mm</footprint>
@@ -391,7 +491,7 @@
       <tstamps>45830753-5bf3-4ae8-a65f-db0c2eed1b67</tstamps>
     </comp>
     <comp ref="TP1">
-      <value>OPOut</value>
+      <value>32kHz</value>
       <footprint>TestPoint:TestPoint_Pad_D1.0mm</footprint>
       <libsource lib="Connector" part="TestPoint" description="test point"/>
       <property name="Sheetname" value=""/>
@@ -399,7 +499,7 @@
       <property name="ki_description" value="test point"/>
       <property name="ki_keywords" value="test point tp"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>1f24ac89-6712-4b9a-b2ba-d5933e47eb1b</tstamps>
+      <tstamps>22072707-3eeb-4589-90a8-ec280426b1c4</tstamps>
     </comp>
     <comp ref="TP2">
       <value>MinPulse</value>
@@ -411,17 +511,6 @@
       <property name="ki_keywords" value="test point tp"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamps>4834dbad-4191-41ae-8474-235453b0ba33</tstamps>
-    </comp>
-    <comp ref="TP3">
-      <value>32kHz</value>
-      <footprint>TestPoint:TestPoint_Pad_D1.0mm</footprint>
-      <libsource lib="Connector" part="TestPoint" description="test point"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="Master_Clock.kicad_sch"/>
-      <property name="ki_description" value="test point"/>
-      <property name="ki_keywords" value="test point tp"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>22072707-3eeb-4589-90a8-ec280426b1c4</tstamps>
     </comp>
     <comp ref="U1">
       <value>LT1178S8</value>
@@ -449,7 +538,7 @@
       <tstamps>ca09fcb3-c5b1-4d37-9d97-50a855a5d128</tstamps>
     </comp>
     <comp ref="U3">
-      <value>OP193</value>
+      <value>OP193FS</value>
       <footprint>Package_SO:SOIC-8_3.9x4.9mm_P1.27mm</footprint>
       <datasheet>https://www.analog.com/media/en/technical-documentation/data-sheets/OP193_293.pdf</datasheet>
       <libsource lib="Master_Clock" part="OP193" description="Precision, Micropower Single Operational Amplifier, SOIC-8/TSSOP-8"/>
@@ -759,6 +848,18 @@
         <pin num="8" name="NC" type="no_connect"/>
       </pins>
     </libpart>
+    <libpart lib="Mechanical" part="MountingHole">
+      <description>Mounting Hole without connection</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>MountingHole*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">H</field>
+        <field name="Value">MountingHole</field>
+        <field name="Datasheet">~</field>
+      </fields>
+    </libpart>
     <libpart lib="Oscillator" part="SG-3030CM">
       <description>32.768kHz Crystal Oscillator (SPXO)</description>
       <docs>https://support.epson.biz/td/api/doc_check.php?mode=dl&amp;lang=en&amp;Parts=SG-3030CM</docs>
@@ -826,6 +927,9 @@
     <library logical="Master_Clock">
       <uri>/home/christian/aa/Projekte/Mutteruhr/Hardware/Master_Clock/Master_Clock.kicad_sym</uri>
     </library>
+    <library logical="Mechanical">
+      <uri>/usr/share/kicad/symbols//Mechanical.kicad_sym</uri>
+    </library>
     <library logical="Oscillator">
       <uri>/usr/share/kicad/symbols//Oscillator.kicad_sym</uri>
     </library>
@@ -844,6 +948,7 @@
       <node ref="C9" pin="1" pintype="passive"/>
       <node ref="J3" pin="1" pinfunction="Pin_1" pintype="passive"/>
       <node ref="R1" pin="1" pintype="passive"/>
+      <node ref="R16" pin="1" pintype="passive"/>
       <node ref="R6" pin="1" pintype="passive"/>
       <node ref="R7" pin="1" pintype="passive"/>
       <node ref="R8" pin="1" pintype="passive"/>
@@ -863,30 +968,26 @@
       <node ref="U3" pin="7" pinfunction="V+" pintype="power_in"/>
     </net>
     <net code="3" name="+BATT">
-      <node ref="C2" pin="1" pintype="passive"/>
-      <node ref="C8" pin="1" pintype="passive"/>
+      <node ref="D2" pin="2" pinfunction="A" pintype="passive"/>
       <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
-      <node ref="L1" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="R5" pin="1" pintype="passive"/>
-      <node ref="U2" pin="4" pinfunction="EN/UVLO" pintype="input"/>
-      <node ref="U2" pin="6" pinfunction="Vin" pintype="power_in"/>
-      <node ref="U4" pin="1" pinfunction="VI" pintype="power_in"/>
+      <node ref="R13" pin="2" pintype="passive"/>
+      <node ref="R14" pin="2" pintype="passive"/>
     </net>
     <net code="4" name="/32kHz">
-      <node ref="TP3" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="TP1" pin="1" pinfunction="1" pintype="passive"/>
       <node ref="U5" pin="7" pinfunction="PA3" pintype="bidirectional"/>
       <node ref="X1" pin="3" pinfunction="OUT" pintype="output"/>
     </net>
     <net code="5" name="/Key1">
-      <node ref="C12" pin="1" pintype="passive"/>
-      <node ref="R8" pin="2" pintype="passive"/>
-      <node ref="SW2" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="U5" pin="2" pinfunction="PA6" pintype="bidirectional"/>
-    </net>
-    <net code="6" name="/Key2">
       <node ref="C11" pin="1" pintype="passive"/>
       <node ref="R7" pin="2" pintype="passive"/>
       <node ref="SW1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U5" pin="2" pinfunction="PA6" pintype="bidirectional"/>
+    </net>
+    <net code="6" name="/Key2">
+      <node ref="C12" pin="1" pintype="passive"/>
+      <node ref="R8" pin="2" pintype="passive"/>
+      <node ref="SW2" pin="1" pinfunction="1" pintype="passive"/>
       <node ref="U5" pin="3" pinfunction="PA7" pintype="bidirectional"/>
     </net>
     <net code="7" name="/LED">
@@ -894,9 +995,8 @@
       <node ref="U5" pin="5" pinfunction="PA2" pintype="bidirectional"/>
     </net>
     <net code="8" name="/MinPulse">
+      <node ref="R15" pin="1" pintype="passive"/>
       <node ref="TP2" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="U1" pin="1" pinfunction="+" pintype="input"/>
-      <node ref="U3" pin="3" pinfunction="+" pintype="input"/>
       <node ref="U5" pin="4" pinfunction="PA1" pintype="bidirectional"/>
     </net>
     <net code="9" name="/SlaveClock">
@@ -927,6 +1027,7 @@
       <node ref="J3" pin="3" pinfunction="Pin_3" pintype="passive"/>
       <node ref="Q1" pin="2" pinfunction="E" pintype="passive"/>
       <node ref="R10" pin="2" pintype="passive"/>
+      <node ref="R17" pin="2" pintype="passive"/>
       <node ref="R3" pin="2" pintype="passive"/>
       <node ref="R4" pin="2" pintype="passive"/>
       <node ref="SW1" pin="2" pinfunction="2" pintype="passive"/>
@@ -941,60 +1042,86 @@
     </net>
     <net code="12" name="Net-(C5-Pad1)">
       <node ref="C5" pin="1" pintype="passive"/>
-      <node ref="TP1" pin="1" pinfunction="1" pintype="passive"/>
-      <node ref="U1" pin="7" pintype="output"/>
-      <node ref="U3" pin="6" pintype="output"/>
+      <node ref="R11" pin="2" pintype="passive"/>
     </net>
     <net code="13" name="Net-(D1-A)">
       <node ref="D1" pin="2" pinfunction="A" pintype="passive"/>
       <node ref="L1" pin="2" pinfunction="2" pintype="passive"/>
       <node ref="U2" pin="1" pinfunction="SW" pintype="input"/>
     </net>
-    <net code="14" name="Net-(D2-A)">
-      <node ref="D2" pin="2" pinfunction="A" pintype="passive"/>
-      <node ref="R5" pin="2" pintype="passive"/>
-    </net>
-    <net code="15" name="Net-(D2-K)">
+    <net code="14" name="Net-(D2-K)">
       <node ref="D2" pin="1" pinfunction="K" pintype="passive"/>
-      <node ref="Q1" pin="3" pinfunction="C" pintype="passive"/>
+      <node ref="R5" pin="1" pintype="passive"/>
     </net>
-    <net code="16" name="Net-(Q1-B)">
+    <net code="15" name="Net-(Q1-B)">
       <node ref="Q1" pin="1" pinfunction="B" pintype="input"/>
       <node ref="R10" pin="1" pintype="passive"/>
       <node ref="R9" pin="2" pintype="passive"/>
     </net>
-    <net code="17" name="Net-(U1A--)">
+    <net code="16" name="Net-(Q1-C)">
+      <node ref="Q1" pin="3" pinfunction="C" pintype="passive"/>
+      <node ref="R5" pin="2" pintype="passive"/>
+    </net>
+    <net code="17" name="Net-(R11-Pad1)">
+      <node ref="R11" pin="1" pintype="passive"/>
+      <node ref="U1" pin="7" pintype="output"/>
+      <node ref="U3" pin="6" pintype="output"/>
+    </net>
+    <net code="18" name="Net-(U1A-+)">
+      <node ref="R15" pin="2" pintype="passive"/>
+      <node ref="R16" pin="2" pintype="passive"/>
+      <node ref="R17" pin="1" pintype="passive"/>
+      <node ref="U1" pin="1" pinfunction="+" pintype="input"/>
+      <node ref="U3" pin="3" pinfunction="+" pintype="input"/>
+    </net>
+    <net code="19" name="Net-(U1A--)">
       <node ref="R1" pin="2" pintype="passive"/>
       <node ref="R3" pin="1" pintype="passive"/>
       <node ref="U1" pin="8" pinfunction="-" pintype="input"/>
       <node ref="U3" pin="2" pinfunction="-" pintype="input"/>
     </net>
-    <net code="18" name="Net-(U2-FBX)">
+    <net code="20" name="Net-(U2-EN{slash}UVLO)">
+      <node ref="R12" pin="1" pintype="passive"/>
+      <node ref="U2" pin="4" pinfunction="EN/UVLO" pintype="input"/>
+    </net>
+    <net code="21" name="Net-(U2-FBX)">
       <node ref="C1" pin="2" pintype="passive"/>
       <node ref="R2" pin="2" pintype="passive"/>
       <node ref="R4" pin="1" pintype="passive"/>
       <node ref="U2" pin="3" pinfunction="FBX" pintype="input"/>
     </net>
-    <net code="19" name="Net-(U2-INTVCC)">
+    <net code="22" name="Net-(U2-INTVCC)">
       <node ref="C6" pin="1" pintype="passive"/>
       <node ref="U2" pin="5" pinfunction="INTVCC" pintype="output"/>
     </net>
-    <net code="20" name="unconnected-(U1-Pad5)">
+    <net code="23" name="Net-(U2-Vin)">
+      <node ref="C2" pin="1" pintype="passive"/>
+      <node ref="L1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="R12" pin="2" pintype="passive"/>
+      <node ref="R13" pin="1" pintype="passive"/>
+      <node ref="U2" pin="6" pinfunction="Vin" pintype="power_in"/>
+    </net>
+    <net code="24" name="Net-(U4-VI)">
+      <node ref="C8" pin="1" pintype="passive"/>
+      <node ref="R14" pin="1" pintype="passive"/>
+      <node ref="U4" pin="1" pinfunction="VI" pintype="power_in"/>
+    </net>
+    <net code="25" name="unconnected-(U1-Pad5)">
       <node ref="U1" pin="5" pintype="output+no_connect"/>
     </net>
-    <net code="21" name="unconnected-(U3-NC-Pad8)">
+    <net code="26" name="unconnected-(U3-NC-Pad8)">
       <node ref="U3" pin="8" pinfunction="NC" pintype="no_connect"/>
     </net>
-    <net code="22" name="unconnected-(U3-NULL-Pad1)">
+    <net code="27" name="unconnected-(U3-NULL-Pad1)">
       <node ref="U3" pin="1" pinfunction="NULL" pintype="input+no_connect"/>
     </net>
-    <net code="23" name="unconnected-(U3-NULL-Pad5)">
+    <net code="28" name="unconnected-(U3-NULL-Pad5)">
       <node ref="U3" pin="5" pinfunction="NULL" pintype="input+no_connect"/>
     </net>
-    <net code="24" name="unconnected-(U4-NC-Pad3)">
+    <net code="29" name="unconnected-(U4-NC-Pad3)">
       <node ref="U4" pin="3" pinfunction="NC" pintype="no_connect"/>
     </net>
-    <net code="25" name="unconnected-(U4-NC-Pad4)">
+    <net code="30" name="unconnected-(U4-NC-Pad4)">
       <node ref="U4" pin="4" pinfunction="NC" pintype="no_connect"/>
     </net>
   </nets>
