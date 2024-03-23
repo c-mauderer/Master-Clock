@@ -1,0 +1,15 @@
+# Bugs in HW V1.0
+
+- BUG: Missing marking for + and - on the supply input
+- BUG: Missing marking for the negative terminal of the capacitors
+- BUG: R7 and C11 are marked incorrectly on the silk screen
+- PATCH: Value of C5 can be reduced to 180 µF. The exact used type is "Panasonic
+  FC 180µF 63V"
+- PATCH: Set C4 to DNP.
+- PATCH: Add a 2.2 MOhm in the MinPulse line and add a voltage divider with two
+  2.2 MOhm between GND and 1.8 V on that line on the OPV side.
+- PATCH: Reduce R1 and R3 to 2.2 MOhm
+- PATCH: Change the divider for the LT8330 feedback voltage (R2 and R4). That
+  one currently needs 2.4 µA. Alternative values are:
+    * 4.7 MΩ and 330 kΩ. That will result in a voltage of 24.4 V.
+    * 2.2 MΩ and 330 kΩ. That will result in a voltage of 12.3 V.
