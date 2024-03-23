@@ -3,6 +3,8 @@
 Note: Most of the documentation is written in English. But there is a short
 German summary at the beginning.
 
+![The three clocks](./Doc/clocks.jpg)
+
 ## Summary (German)
 
 Ziel des Projektes ist die Ansteuerung von Neben- beziehungsweise Tochteruhren ohne
@@ -588,3 +590,24 @@ Power estimate:
 * 3 V would be 2 batteries.
   * AA would reach 3000 mWh * 2 / 2.58 mW ≈ 100 d
   * C would reach 10000 mWh * 2 / 2.58 mW ≈ 320 d
+
+#### Assembly
+
+The last step was to put the schematic into the clocks.
+
+For the two clocks of the visitor of the Repair Café, I isolated the whole PCB
+using some heat shrinking tube and decided to use a battery holder for three C
+cells. To avoid any modifications, I only used some wire to fix the battery
+holder so that it doesn't fall out of the clock.
+
+For my test-clock I used some tape to fix everything. I used a printed battery
+holder for thee AAA cells. With that I'll make some run-time-tests to see
+whether my estimates are realistic. Later I'll most likely upgrade the battery
+holder to one holding four AA batteries. The test-clock is also the one that has
+been used for all measurements.
+
+My test-clock is the one on the right in the first of the following images:
+
+![The three clocks](./Doc/clocks.jpg)
+
+![The three clocks](./Doc/clocks_back.jpg)
